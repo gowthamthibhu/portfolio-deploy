@@ -18,13 +18,18 @@ export default function Index() {
     const [isHeaderBlack, setIsHeaderBlack] = useState(false);
 
     useEffect(() => {
-        // Update header style based on pathname
-        const isProjectsPage = pathname === '/projects' || pathname === '/about';
+        const basePath = '/portfolio-deploy';
+        const normalizedPathname = pathname.startsWith(basePath)
+            ? pathname.replace(basePath, '')
+            : pathname;
+    
+        const isProjectsPage = normalizedPathname === '/projects' || normalizedPathname === '/about';
         setIsHeaderBlack(isProjectsPage);
-
+    
         // Close the nav menu on pathname change
         if (isActive) setIsActive(false);
     }, [pathname]);
+    
 
     useLayoutEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
