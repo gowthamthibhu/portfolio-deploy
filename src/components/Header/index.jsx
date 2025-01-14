@@ -15,8 +15,14 @@ export default function Index() {
     const [isActive, setIsActive] = useState(false);
     const pathname = usePathname();
     const button = useRef(null);
+    const [isHeaderBlack, setIsHeaderBlack] = useState(false);
 
     useEffect(() => {
+        // Update header style based on pathname
+        const isProjectsPage = pathname === '/projects' || pathname === '/about';
+        setIsHeaderBlack(isProjectsPage);
+
+        // Close the nav menu on pathname change
         if (isActive) setIsActive(false);
     }, [pathname]);
 
@@ -27,36 +33,60 @@ export default function Index() {
                 trigger: document.documentElement,
                 start: 0,
                 end: window.innerHeight,
-                onLeave: () => { gsap.to(button.current, { scale: 1, duration: 0.25, ease: "power1.out" }) },
-                onEnterBack: () => { gsap.to(button.current, { scale: 0, duration: 0.25, ease: "power1.out" }, setIsActive(false)) }
-            }
+                onLeave: () => {
+                    gsap.to(button.current, {
+                        scale: 1,
+                        duration: 0.25,
+                        ease: "power1.out",
+                    });
+                },
+                onEnterBack: () => {
+                    gsap.to(button.current, {
+                        scale: 0,
+                        duration: 0.25,
+                        ease: "power1.out",
+                    });
+                    setIsActive(false);
+                },
+            },
         });
     }, []);
 
     useLayoutEffect(() => {
         const handleScroll = () => {
             if (window.innerWidth <= 768) {
-                if (window.scrollY > 150) { // Show button after scrolling down 50px
-                    gsap.to(button.current, { scale: 1, duration: 0.25, ease: "power1.out" });
+                if (window.scrollY > 150) {
+                    gsap.to(button.current, {
+                        scale: 1,
+                        duration: 0.25,
+                        ease: "power1.out",
+                    });
                 } else {
-                    gsap.to(button.current, { scale: 0, duration: 0.25, ease: "power1.out" });
+                    gsap.to(button.current, {
+                        scale: 0,
+                        duration: 0.25,
+                        ease: "power1.out",
+                    });
                 }
             }
         };
-    
+
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Call the function initially in case the user is already scrolled down
-    
+        handleScroll();
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-    
-    const isProjectsPage = pathname === '/projects' || pathname === '/about';
 
     return (
         <>
-            <div ref={header} className={`${styles.header} ${isProjectsPage ? styles.headerBlack : ''}`}>
+            <div
+                ref={header}
+                className={`${styles.header} ${
+                    isHeaderBlack ? styles.headerBlack : ''
+                }`}
+            >
                 <div className={styles.logo}>
                     <p className={styles.copyright}>©</p>
                     <div className={styles.name}>
@@ -68,33 +98,36 @@ export default function Index() {
                 <div className={styles.nav}>
                     <Magnetic>
                         <div className={styles.el}>
-                            <Link href="/projects">
-                                Projects
-                            </Link>
+                            <Link href="/projects">Projects</Link>
                             <div className={styles.indicator}></div>
                         </div>
                     </Magnetic>
                     <Magnetic>
                         <div className={styles.el}>
-                            <Link href="/about">
-                                About
-                            </Link>
+                            <Link href="/about">About</Link>
                             <div className={styles.indicator}></div>
                         </div>
                     </Magnetic>
                     <Magnetic>
                         <div className={styles.el}>
-                            <Link href="/contact">
-                                Contact
-                            </Link>
+                            <Link href="/contact">Contact</Link>
                             <div className={styles.indicator}></div>
                         </div>
                     </Magnetic>
                 </div>
             </div>
             <div ref={button} className={styles.headerButtonContainer}>
-                <Rounded onClick={() => { setIsActive(!isActive) }} className={`${styles.button}`}>
-                    <div className={`${styles.burger} ${isActive ? styles.burgerActive : ""}`}></div>
+                <Rounded
+                    onClick={() => {
+                        setIsActive(!isActive);
+                    }}
+                    className={`${styles.button}`}
+                >
+                    <div
+                        className={`${styles.burger} ${
+                            isActive ? styles.burgerActive : ''
+                        }`}
+                    ></div>
                 </Rounded>
             </div>
             <AnimatePresence mode="wait">
