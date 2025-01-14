@@ -6,7 +6,6 @@ const nextConfig = {
     
     // Specify the base path for GitHub Pages deployment
     basePath: '/portfolio-deploy',  // Replace 'your-repo-name' with your actual GitHub repo name
-    distDir: "dist",
     images: {
         unoptimized: true,
     },
