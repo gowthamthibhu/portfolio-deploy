@@ -20,5 +20,8 @@
     "react-dom": "18.2.0",
     "react-parallax": "^3.5.1",
     "sass": "^1.64.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
   }
 }
