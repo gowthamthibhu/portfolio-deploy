@@ -3,12 +3,10 @@
  */
 const nextConfig = {
   output: 'export',
-  basePath: '/',  // This is correct for GitHub Pages deployment
+  basePath: '', // Leave empty if no prefix is required, or use '/prefix' without trailing '/'
   images: {
     unoptimized: true,
   },
 };
 
-  
 module.exports = nextConfig;
-  
