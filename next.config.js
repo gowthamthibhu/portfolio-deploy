@@ -3,7 +3,7 @@
  */
 const nextConfig = {
   output: 'export',
-  basePath: '/portfolio-deploy',  // This is correct for GitHub Pages deployment
+  basePath: '/',  // This is correct for GitHub Pages deployment
   images: {
     unoptimized: true,
   },
